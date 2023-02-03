@@ -98,8 +98,8 @@ where
     }
 }
 
-pub fn until_char(s: &str, c: char) -> &str {
-    StrSplit::new(s, c).next().unwrap_or("!")
+pub fn until<'a>(s: &'a str, d: &str) -> &'a str {
+    StrSplit::new(s, d).next().unwrap_or("!")
 }
 
 #[cfg(test)]

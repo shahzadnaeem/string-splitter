@@ -14,22 +14,17 @@ fn main() {
         Err(fail) => panic!("{}", fail.to_string()),
     };
 
-    let mut input: String = String::from("Hello😊 😊🐡😊😊🐡🐡🐡 😊😊😊🐡 ");
-    let mut delimiter = '🐡';
-
     if matches.free.len() >= 2 {
-        input = matches.free[0].clone();
+        let input = matches.free[0].clone();
+        let delimiter = matches.free[1].clone();
 
-        if matches.free[1].len() > 0 {
-            delimiter = matches.free[1].chars().nth(0).unwrap();
+        if matches.opt_present("u") {
+            let res = splitter::until(&input, &delimiter);
+            println!("{}", res);
+        } else {
+            //                                                   &* <-- Huh? String -> &str apparently
+            let res: Vec<&str> = splitter::StrSplit::new(&input, &*delimiter).collect();
+            println!("{:?}", res);
         }
-    }
-
-    if matches.opt_present("u") {
-        let res = splitter::until_char(&input, delimiter);
-        println!("{:?}", res);
-    } else {
-        let res: Vec<&str> = splitter::StrSplit::new(&input, delimiter).collect();
-        println!("{:?}", res);
     }
 }

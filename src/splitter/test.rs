@@ -73,19 +73,19 @@ fn split_csv_by_string() {
 #[test]
 fn until_char_empty() {
     let input = "";
-    let delim = '🌵';
+    let delim = "🌵";
 
-    let res = until_char(input, delim);
+    let res = until(input, delim);
 
     assert_eq!("", res);
 }
 
 #[test]
 fn until_char_one() {
-    let input = "one🌵TWO three";
-    let delim = '🌵';
+    let input = "one🌵🌵🌵TWO three";
+    let delim = "🌵🌵";
 
-    let res = until_char(input, delim);
+    let res = until(input, delim);
 
     assert_eq!("one", res);
 }
