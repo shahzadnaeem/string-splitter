@@ -98,6 +98,10 @@ where
     }
 }
 
+pub fn until_char(s: &str, c: char) -> &str {
+    StrSplit::new(s, c).next().unwrap_or("!")
+}
+
 #[cfg(test)]
 #[path = "./splitter/test.rs"]
 mod test;
