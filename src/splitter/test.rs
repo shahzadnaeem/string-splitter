@@ -1,3 +1,5 @@
+use quickcheck::TestResult;
+
 use super::*;
 
 #[test]
@@ -88,4 +90,33 @@ fn until_char_one() {
     let res = until(input, delim);
 
     assert_eq!("one", res);
+}
+
+// ---- Quicktest
+
+fn csv3(a: i32, b: i32, c: i32) -> String {
+    format!("{},{},{}", a, b, c)
+}
+
+quickcheck! {
+    fn split_csv3(a:i32, b:i32, c:i32) -> bool {
+
+        let as_csv = csv3(a,b,c);
+        let split = as_csv.split(",").map(|it| it.parse::<i32>().unwrap()).collect::<Vec<i32>>();
+
+        a == split[0] && b == split[1] && c == split[2]
+    }
+}
+
+quickcheck! {
+    fn str_split(inputs: Vec<String>, delim: String) -> TestResult {
+
+        // Unsupported cases!
+        if inputs.len() == 0 || delim.len() == 0 { return TestResult::discard() }
+
+        let line = inputs.join(&delim);
+        let res: Vec<&str> = StrSplit::new(&line, &*delim).collect();
+
+        TestResult::from_bool(res == inputs)
+    }
 }

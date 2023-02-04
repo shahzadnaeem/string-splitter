@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate quickcheck;
+
 use std::env;
 
 use getopts::Options;
@@ -15,15 +18,14 @@ fn main() {
     };
 
     if matches.free.len() >= 2 {
-        let input = matches.free[0].clone();
-        let delimiter = matches.free[1].clone();
+        let input = matches.free[0].as_str();
+        let delimiter = matches.free[1].as_str();
 
         if matches.opt_present("u") {
-            let res = splitter::until(&input, &delimiter);
+            let res = splitter::until(&input, delimiter);
             println!("{}", res);
         } else {
-            //                                                   &* <-- Huh? String -> &str apparently
-            let res: Vec<&str> = splitter::StrSplit::new(&input, &*delimiter).collect();
+            let res: Vec<&str> = splitter::StrSplit::new(&input, delimiter).collect();
             println!("{:?}", res);
         }
     }
