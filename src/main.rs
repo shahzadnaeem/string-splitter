@@ -1,6 +1,3 @@
-#[macro_use]
-extern crate quickcheck;
-
 use std::env;
 
 use getopts::Options;

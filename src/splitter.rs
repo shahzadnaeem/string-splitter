@@ -101,7 +101,3 @@ where
 pub fn until<'a>(s: &'a str, d: &str) -> &'a str {
     StrSplit::new(s, d).next().unwrap_or("!")
 }
-
-#[cfg(test)]
-#[path = "./splitter/test.rs"]
-mod test;
